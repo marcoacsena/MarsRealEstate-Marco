@@ -66,14 +66,18 @@ class OverviewViewModel : ViewModel() {
 //                    }
 //                })
 
-        //use coroutines with exception handling, instead of using callbacks
+
+        /**use coroutines with exception handling, instead of using callbacks
+         * Sets the value of the response LiveData to the Mars API status or the successful number of
+         * Mars properties retrieved.
+         */
         viewModelScope.launch {
 
             try {
                 val listResult = MarApi.retrofitService.getProperties()
                 _response.value = "Success: ${listResult.size} Mars properties retrieved"
 
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 _response.value = "Failure: ${e.message}"
 
             }
