@@ -24,9 +24,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.android.marsrealestatecopy.network.MarApi
 import com.example.android.marsrealestatecopy.network.MarsProperty
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -36,7 +33,11 @@ class OverviewViewModel : ViewModel() {
     // The internal MutableLiveData String that stores the most recent response
     private val _response = MutableLiveData<String>()
 
-    // The external immutable LiveData for the response String
+    private val _property = MutableLiveData<MarsProperty>()
+    val property : LiveData<MarsProperty>
+            get() = _property
+
+     //The external immutable LiveData for the response String
     val response: LiveData<String>
         get() = _response
 
@@ -76,6 +77,10 @@ class OverviewViewModel : ViewModel() {
             try {
                 val listResult = MarApi.retrofitService.getProperties()
                 _response.value = "Success: ${listResult.size} Mars properties retrieved"
+
+                if(listResult.size > 0 ){
+                    _property.value = listResult[0]
+                }
 
             } catch (e: Exception) {
                 _response.value = "Failure: ${e.message}"
