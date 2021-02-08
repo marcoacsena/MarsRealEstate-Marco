@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.marsrealestatecopy.R
 import com.example.android.marsrealestatecopy.databinding.FragmentOverviewBinding
+import com.example.android.marsrealestatecopy.databinding.GridViewItemBinding
+
 
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.
@@ -44,11 +46,15 @@ class OverviewFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentOverviewBinding.inflate(inflater)
 
+        //val binding = GridViewItemBinding.inflate(inflater)
+
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
+
+        binding.photosGrid.adapter = PhotoGridAdapter()
 
         setHasOptionsMenu(true)
         return binding.root
